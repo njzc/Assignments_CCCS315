@@ -25,6 +25,15 @@ public class Polynomial {
 	// combined with the existing one.
 	public void addTerm(Term t) {
 		
+		int minExponent = 0;
+		int maxExponent = 0;
+		
+		if ( termList.size() > 0 )
+		{
+			minExponent = termList.get(0).getExponent();
+			maxExponent = termList.get(0).getExponent();
+		}
+		
 		for(Term term:termList)
 		{
 			if ( term.getExponent() == t.getExponent())
@@ -32,9 +41,38 @@ public class Polynomial {
 				term.addCoefficient(t.getCoefficient());
 				return;
 			}
+			
+			if ( term.getExponent() >= maxExponent )
+			{
+				maxExponent = term.getExponent();
+			}
+			
+			if ( term.getExponent() <= minExponent )
+			{
+				minExponent = term.getExponent();
+			}
 		}
 		
-		termList.add(t);
+		if ( t.getExponent() <= minExponent )
+		{
+			termList.addFirst(t);
+		}
+		else if ( t.getExponent() >= maxExponent)
+		{
+			termList.addLast(t);
+		}
+		else
+		{
+			for(int i = 0; i < termList.size() - 1;i ++)
+			{
+				if ( termList.get(i).getExponent() < t.getExponent() && t.getExponent() < termList.get(i + 1).getExponent())
+				{
+					termList.add(i + 1,t);
+					break;
+				}
+			}
+			
+		}
 	}
 	
 	// Method to multiply two polynomials
@@ -75,7 +113,7 @@ public class Polynomial {
 	public String toString() { 
 		
 		String result = "";
-		Collections.sort(termList);
+		//Collections.sort(termList);
 		for(Term term:termList)
 		{
 			String termString = term.toString();
