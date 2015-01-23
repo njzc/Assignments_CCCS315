@@ -1,6 +1,7 @@
 import java.text.DecimalFormat;
 
-public class Term implements Comparable<Term> {
+public class Term
+{
 
 	private double coefficient;
 	private int exponent;
@@ -37,7 +38,7 @@ public class Term implements Comparable<Term> {
 		String result = "";
 		
 		DecimalFormat df = new DecimalFormat();
-		df.applyPattern("#.####");
+		df.applyPattern("#.#####");
 		
 		if ( coefficient > 0 )
 		{
@@ -85,17 +86,100 @@ public class Term implements Comparable<Term> {
 		return result;
 	}
 	
-	@Override
-	public int compareTo(Term target) {
-
-		int comparedExponent = target.getExponent();
+	
+	// return a new term initialized to the value represented by the specified String
+	public static Term parseTerm(String inputString, char sign) throws Exception
+	{
+		double coefficient = 0;
+		int exponent = 0;
+		String exceptionMessage = "Term string: " + inputString + " is invalid.";
 		
-		if (this.exponent > comparedExponent) {
-			return 1;
-		} else if (this.exponent == comparedExponent) {
-			return 0;
-		} else {
-			return -1;
+		if (inputString.contains("x"))
+		{
+			String array[] = inputString.split("x",-1);
+			
+			if ( array.length == 2)
+			{
+				String coefficientString = array[0];
+				String exponentString = array[1];
+				
+				// get coefficient
+				if ( coefficientString.isEmpty())
+				{
+					coefficient = 1;
+				}
+				else
+				{
+					try
+					{
+						coefficient = Double.parseDouble(coefficientString);
+					}
+					catch (Exception ex)
+					{
+						// coefficient  string is not a valid double
+						throw new Exception(exceptionMessage);
+					}
+				}
+				
+				// get exponent
+				if ( exponentString.isEmpty())
+				{
+					exponent = 1;
+				}
+				else
+				{
+					if ( exponentString.startsWith("^"))
+					{
+						// remove "^"
+						exponentString = exponentString.substring(1);
+
+						try
+						{
+							exponent = Integer.parseInt(exponentString);
+						}
+						catch (Exception ex)
+						{
+							// exponent string is not a valid integer
+							throw new Exception(exceptionMessage);
+						}
+					}
+					else
+					{
+						// "^" doesn't follow "x"
+						throw new Exception(exceptionMessage);
+					}
+				}
+			}
+			else
+			{
+				// more than one x
+				throw new Exception(exceptionMessage);
+			}
+			if (inputString.startsWith("x"))
+			{
+				coefficient = 1;
+			}
 		}
+		else
+		{
+			// only number
+			try
+			{
+				coefficient = Double.parseDouble(inputString);
+			}
+			catch (Exception ex)
+			{
+				// coefficient  string is not a valid double
+				throw new Exception(exceptionMessage);
+			}			
+		}
+		
+		if ( sign == '-')
+		{
+			coefficient = 0 - coefficient;
+		}
+		
+		
+		return new Term(coefficient, exponent);
 	}
 }
