@@ -80,7 +80,7 @@ public class Term
 		}
 		else if ( exponent == 0 )
 		{
-			//don't print anything when exponent is equal to 0
+			//don't print exponent when exponent is equal to 0
 		}
 		
 		return result;

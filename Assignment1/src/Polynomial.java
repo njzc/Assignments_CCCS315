@@ -1,5 +1,4 @@
 import java.util.LinkedList;
-import java.util.regex.*;
 
 public class Polynomial {
 	
@@ -12,7 +11,7 @@ public class Polynomial {
 
 	// copy constructor
 	public Polynomial(Polynomial q) {
-		
+		termList = q.getTermList();
 	}
 	
 	public LinkedList<Term> getTermList()
@@ -47,9 +46,9 @@ public class Polynomial {
 			}
 			
 			// if there is only 1 term
-			if ( t.getExponent() == termList.getFirst().getExponent() && t.getExponent() == termList.getLast().getExponent())
+			if ( termList.size() == 1 && t.getExponent() == termList.getFirst().getExponent() )
 			{
-				termList.get(0).addCoefficient(t.getCoefficient());
+				termList.getFirst().addCoefficient(t.getCoefficient());
 				return;
 			}
 			
@@ -119,12 +118,22 @@ public class Polynomial {
 		
 		String result = "";
 		
+		if ( termList.size() == 1 )
+		{
+			if ( termList.getFirst().getCoefficient() == 0)
+			{
+				// return "0" if the only term is "0"
+				return "0";  
+			}
+		}
+		
+		
 		for(Term term:termList)
 		{
 			String termString = term.toString();
-			if ( result.equalsIgnoreCase("") )
+			if ( result.equals("") )
 			{
-				// remove + and space at the very beginning of the string
+				// remove "+" and space at the very beginning of the string
 				result += termString.replace("+", "").replace(" ", "");
 			}
 			else
@@ -194,9 +203,8 @@ public class Polynomial {
 			{
 				try
 				{
-					if ( i > 0 )
+					if ( i > 0 ) // ignore first empty string
 					{
-						// ignore first empty string
 						Term term = Term.parseTerm(termStringArray[i], signArray[i - 1]);
 						polynomial.addTerm(term);
 					}
