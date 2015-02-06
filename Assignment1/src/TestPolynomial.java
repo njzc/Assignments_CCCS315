@@ -1,11 +1,16 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class TestPolynomial {
 	
 	public static void main(String[] args)
 	{
+		
 		String inputString = "";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         boolean canContinue = true;
@@ -17,6 +22,7 @@ public class TestPolynomial {
 			
 			do
 			{
+				// ask user to input p(x)
 				System.out.println("Please enter the polynomials p(x): press \"q\" to quit");				
 				try 
 				{
@@ -47,6 +53,7 @@ public class TestPolynomial {
 				}
 			}while (p == null);
 			
+			// ask user to input q(x)
 			if ( canContinue )
 			{
 				do
@@ -72,6 +79,7 @@ public class TestPolynomial {
 					}
 				}while (q == null);
 				
+				// print out the result
 				System.out.println("p(x) = " + p);
 				System.out.println("q(x) = " + q);
 				System.out.println("p(x) * q(x) = " + p.multiply(q));
@@ -86,7 +94,7 @@ public class TestPolynomial {
 		} 
 		catch (IOException e) 
 		{
-			
+			System.out.println(e.getMessage());
 		}		
 	}
 

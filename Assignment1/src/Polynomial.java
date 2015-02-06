@@ -14,6 +14,7 @@ public class Polynomial {
 		termList = q.getTermList();
 	}
 	
+	// return term list
 	public LinkedList<Term> getTermList()
 	{
 		return termList;
@@ -48,33 +49,36 @@ public class Polynomial {
 			// if there is only 1 term
 			if ( termList.size() == 1 && t.getExponent() == termList.getFirst().getExponent() )
 			{
-				termList.getFirst().addCoefficient(t.getCoefficient());
+				termList.getFirst().add(t);
 				return;
 			}
-			
-			for(int i = 0; i < termList.size() - 1; i++)
+			else
 			{
-				Term currentTerm = termList.get(i);
-				Term nextTerm = termList.get(i + 1);
-				
-				if ( currentTerm.getExponent() == t.getExponent())
+				for(int i = 0; i < termList.size() - 1; i++)
 				{
-					currentTerm.addCoefficient(t.getCoefficient());
-					return;
-				}
-				
-				if ( nextTerm.getExponent() == t.getExponent())
-				{
-					nextTerm.addCoefficient(t.getCoefficient());
-					return;
-				}
-				
-				if ( currentTerm.getExponent() < t.getExponent() && t.getExponent() < nextTerm.getExponent())
-				{
-					termList.add(i + 1,t);
-					return;
-				}	
+					Term currentTerm = termList.get(i);
+					Term nextTerm = termList.get(i + 1);
+					
+					if ( currentTerm.getExponent() == t.getExponent())
+					{
+						currentTerm.add(t);
+						break;
+					}
+					
+					if ( nextTerm.getExponent() == t.getExponent())
+					{
+						nextTerm.add(t);
+						break;
+					}
+					
+					// if t's exponent is between current term and next term exponent, insert t into them
+					if ( currentTerm.getExponent() < t.getExponent() && t.getExponent() < nextTerm.getExponent())
+					{
+						termList.add(i + 1,t);
+						break;
+					}	
 
+				}
 			}
 		}
 	}
@@ -145,6 +149,7 @@ public class Polynomial {
 		return result;
 	}
 	
+	// parse string into polynomial
 	public static Polynomial parsePolynomial(String inputString) throws Exception
 	{
 		Polynomial polynomial = new Polynomial();
@@ -164,6 +169,7 @@ public class Polynomial {
 		inputString = inputString.replace("*x", "x");
 		if ( inputString.contains("*"))
 		{
+			// if it still contains *, throw exception
 			throw new Exception("Input string contains unnecessary *");
 		}
 		
@@ -180,10 +186,12 @@ public class Polynomial {
 			inputString = "+" + inputString;
 		}
 		
+		// split input string into term strings
 		String termStringArray[] = inputString.split("[+-]",-1);
 		char signArray[] = new char[termStringArray.length];
 		int signIndex = 0;
 		
+		// get all signs
 		for(char c : inputString.toCharArray())
 		{
 			if ( c == '+' || c == '-' )
@@ -193,6 +201,7 @@ public class Polynomial {
 			}
 		}
 		
+		// parse every term string
 		for(int i = 0; i < termStringArray.length; i++)
 		{
 			if (termStringArray[i].isEmpty() && i > 0)

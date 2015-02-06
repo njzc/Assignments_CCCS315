@@ -6,33 +6,44 @@ public class Term
 	private double coefficient;
 	private int exponent;
 
+	// constructor
 	public Term(double coefficient, int exponent) {
 		this.coefficient = coefficient;
 		this.exponent = exponent;
 	}
 
+	// get term's coefficient
 	public double getCoefficient() {
 		return coefficient;
 	}
 
+	// get term's exponent
 	public int getExponent() {
 		return exponent;
 	}
 
-	public void addCoefficient(double coefficient) {
-		this.coefficient += coefficient;
+	// add another term
+	public void add(Term term) {
+		if ( this.exponent == term.getExponent())
+		{
+			this.coefficient += term.getCoefficient();
+		}
 	}
 	
+	// multiply another term
 	public Term multiply(Term term)
 	{
 		return new Term(coefficient * term.getCoefficient(), exponent + term.getExponent());
 	}
 
+	// get term's derivative
 	public Term getDerivative()
 	{
 		return new Term(coefficient * exponent, exponent - 1);
 	}
 	
+	// return term's string
+	@Override
 	public String toString()
 	{
 		String result = "";
@@ -64,8 +75,9 @@ public class Term
 				result += " - " + df.format((-coefficient)); 
 			}
 		}
-		else 
-		{
+		else
+		{ 
+			// coefficient == 0
 			return "";
 		}
 		
