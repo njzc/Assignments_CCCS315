@@ -25,7 +25,8 @@ public class CirArrayQueue {
 
 	// copy constructor
 	public CirArrayQueue(CirArrayQueue otherQueue) {
-
+		this();
+		copyQueue(otherQueue);
 	}
 
 	// Method to initialize the queue to an empty state.
@@ -93,13 +94,43 @@ public class CirArrayQueue {
 
 	// Method to make a copy of otherQueue.
 	public void copyQueue(CirArrayQueue otherQueue) {
-//		while ( !otherQueue.isEmpty())
-//		{
-//			enqueue(otherQueue.peekFront());
-//		}
+		
+		//create a temp queue;		
+		CirArrayQueue tempQueue = new CirArrayQueue();
+		
+		//clear all items from self queue
+		while (!this.isEmpty())
+		{
+			this.dequeue();
+		}
+
+		//copy each item from other queue to temp&self queue,
+		//then delete it from other queue
+		while ( !otherQueue.isEmpty() )
+		{
+			DataElement item = (DataElement)otherQueue.peekFront();
+			if ( item != null )
+			{
+				tempQueue.enqueue(item);
+				this.enqueue(item);
+				otherQueue.dequeue();
+			}
+		}
+		
+		//re-add items from temp queue to other queue
+		while ( !tempQueue.isEmpty())
+		{
+			DataElement item = (DataElement)tempQueue.peekFront();
+			if ( item != null )
+			{
+				otherQueue.enqueue(item);
+				tempQueue.dequeue();
+			}
+		}
+		
 	}
 	
-	public DataElement[] getList(){
+	public DataElement[] getList1(){
 		return list;
 	}
 }

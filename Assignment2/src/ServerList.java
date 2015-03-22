@@ -57,7 +57,7 @@ public class ServerList {
 	// Postcondition: To serve the customer specified by
 	// cCustomer, the server specified by serverID is set
 	// to "busy", and the transaction time is set according
-	// to the customer’s transaction time.
+	// to the customeræŠ¯ transaction time.
 	public void setServerBusy(int serverID, Customer cCustomer) {
 		servers[serverID].setCurrentCustomer(cCustomer);
 		servers[serverID].setBusy();
@@ -84,7 +84,7 @@ public class ServerList {
 					server.setFree();
 					
 					// Output the following message to the screen:
-					// "Server number XXX, Customer number YYY departed clock unit ZZZ”
+					// "Server number XXX, Customer number YYY departed clock unit ZZZï¿½
 					System.out.println("Server number " + ( i + 1 )
 							+ ", Customer number " + server.getCurrentCustomerNumber()
 							+ " departed at clock unit " + (server.getCurrentCustomerArrivalTime() + server.getCurrentCustomerTransactionTime()));
@@ -92,4 +92,16 @@ public class ServerList {
 			}
 		}
 	}
+	
+	//to be deleted
+	public int getLength()
+	{
+		return servers.length;
+	}
+	
+	public Server getServer(int index)
+	{
+		return servers[index];
+	}
+	
 }

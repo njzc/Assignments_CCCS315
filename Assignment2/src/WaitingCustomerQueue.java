@@ -21,15 +21,26 @@ public class WaitingCustomerQueue extends CirArrayQueue {
 	// the queue is incremented by one time unit.
 	public void updateWaitingQueue() {
 		
-		DataElement[] list = super.getList();
-		for (int i = 0; i < list.length; i++)
+		//create a temp queue;		
+		CirArrayQueue tempQueue = new CirArrayQueue();
+		
+		//increment each customer waiting time by one time unit, 
+		//and copy it from self queue to temp queue,
+		//then delete it from self queue
+		while ( !this.isEmpty() )
 		{
-			if ( list[i] != null )
+			Customer customer = (Customer)this.peekFront();
+			if ( customer != null )
 			{
-				Customer customer = (Customer)list[i];
 				customer.incrementWaitingTime();
+				tempQueue.enqueue(customer);
+				this.dequeue();
 			}
 		}
 		
+		//copy from temp queue
+		super.copyQueue(tempQueue);
+
+			
 	}
 }
