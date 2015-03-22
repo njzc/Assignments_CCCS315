@@ -9,7 +9,7 @@ public class CustomerServicingSimulation {
 	private static int timeBetweenCustomerArrival;
 
 	public static void main(String[] args) throws IOException {
-		//setSimulationParameters();
+		setSimulationParameters();
 		runSimulation();
 	}
 
@@ -63,18 +63,13 @@ public class CustomerServicingSimulation {
 		// number of customers left in the waiting queue, number of customers
 		// left with the servers, the
 		// waiting queue, a list of serves
-		
-		simulationTime = 100;
-		numberOfServers = 2;
-		transactionTime = 5;
-		timeBetweenCustomerArrival = 4;
 
 		int clock = 0;
 		int numberOfCustomers = 0;
 		int totalWaitingTimes = 0;
 		double averageWaitingTimes = 0;
 		int numberOfCustomersServed = 0;
-		int numberOfCustomersLeftInServers = 0;
+		int numberOfCustomersLeftWithServers = 0;
 		int numberOfCustomersLeftInQueue = 0;
 		
 		WaitingCustomerQueue customerQueue = new WaitingCustomerQueue();
@@ -82,17 +77,14 @@ public class CustomerServicingSimulation {
 		
 		ServerList servers = new ServerList(numberOfServers);
 		
-		String test = "";
-		
 		for (clock = 1; clock <= simulationTime; clock++) {
 			
 			// Update the server list to decrement the transaction time of each
 			// busy server by one time unit.
 			servers.updateServers();
 			
-			// If the customer queue is nonempty, increment the waiting time
-			// of each customer by one
-			// time unit.
+			// If the customer's queue is nonempty, increment the waiting time
+			// of each customer by one time unit.
 			if ( !customerQueue.isEmpty() )
 			{
 				customerQueue.updateWaitingQueue();
@@ -109,13 +101,13 @@ public class CustomerServicingSimulation {
 				customerQueue.enqueue(newCustomer);
 
 				// Output the following message to the screen:
-				// "Customer number XXX arrived at time unit YYY�
+				// "Customer number XXX arrived at time unit YYY"
 				System.out.println("Customer number " + numberOfCustomers 
 						+ " arrived at time unit " + clock);
 
 			}
 			
-			// If a server is free and the customers�queue is nonempty then
+			// If a server is free and the customers' queue is nonempty then
 			// remove a customer from the
 			// front of the queue and send the customer to the free server.
 			int freeServerID = servers.getFreeServerID();
@@ -129,40 +121,9 @@ public class CustomerServicingSimulation {
 				}
 			}
 			
-			//test begin
-
-			test = test + (clock + "|");
-			for (int i = 0; i < servers.getLength(); i++)
-			{
-				Server server = servers.getServer(i);
-				if ( !server.isFree() )
-				{
-					test += (server.getCurrentCustomerNumber() + "|");
-				}
-				else
-				{
-					test += " |";
-				}
-				
-			}
-			
-			for (int i = 0; i < customerQueue.getList1().length; i++)
-			{
-				Customer customer = (Customer)customerQueue.getList1()[i];
-				if ( customer != null )
-				{
-					test += customer.getCustomerNumber() + ",";
-				}
-			}
-			test += "\r\n";
-			//end test
 		}
 		
-		//test
-		System.out.println(test);
-		
 		//get number of customers left in the waiting queue
-
 		if ( !customerQueue.isEmpty())
 		{
 			WaitingCustomerQueue tempQueue = new WaitingCustomerQueue(customerQueue);
@@ -178,10 +139,10 @@ public class CustomerServicingSimulation {
 		averageWaitingTimes = (double)totalWaitingTimes / numberOfCustomers;
 		
 		//get numbers of customers left in servers
-		numberOfCustomersLeftInServers = servers.getNumberOfBusyServers();
+		numberOfCustomersLeftWithServers = servers.getNumberOfBusyServers();
 		
 		//get numbers of served customers
-		numberOfCustomersServed = numberOfCustomers - numberOfCustomersLeftInQueue - numberOfCustomersLeftInServers;
+		numberOfCustomersServed = numberOfCustomers - numberOfCustomersLeftInQueue - numberOfCustomersLeftWithServers;
 		
 		// Print the following summary results of the simulation to the screen:
 		System.out.println("Simulation ran for " + simulationTime + " time units");
@@ -190,9 +151,9 @@ public class CustomerServicingSimulation {
 		System.out.println("Average arrival time difference between customers: " + timeBetweenCustomerArrival);
 		System.out.println("Total wait time of all customers: " + totalWaitingTimes);
 		System.out.println("Number of customers who completed a transaction: " + numberOfCustomersServed);
-		System.out.println("Number of customers left in the servers: " + numberOfCustomersLeftInServers);
+		System.out.println("Number of customers left in the servers: " + numberOfCustomersLeftWithServers);
 		System.out.println("Number of customers left in the queue: " + numberOfCustomersLeftInQueue);
-		System.out.println("Average wait time: " + averageWaitingTimes);
+		System.out.printf("Average wait time: %.2f \r\n",averageWaitingTimes);
 		System.out.println("************** END SIMULATION *************");
 	}
 }

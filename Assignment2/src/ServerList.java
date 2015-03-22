@@ -4,6 +4,7 @@ public class ServerList {
 
 	// default constructor to initialize a list of servers
 	public ServerList() {
+		this(10); // set default number of servers to 10
 	}
 
 	// constructor to initialize a list of servers specified by num.
@@ -84,7 +85,7 @@ public class ServerList {
 					server.setFree();
 					
 					// Output the following message to the screen:
-					// "Server number XXX, Customer number YYY departed clock unit ZZZ�
+					// "Server number XXX, Customer number YYY departed clock unit ZZZ"
 					System.out.println("Server number " + ( i + 1 )
 							+ ", Customer number " + server.getCurrentCustomerNumber()
 							+ " departed at clock unit " + (server.getCurrentCustomerArrivalTime() + server.getCurrentCustomerTransactionTime()));
@@ -92,16 +93,6 @@ public class ServerList {
 			}
 		}
 	}
-	
-	//to be deleted
-	public int getLength()
-	{
-		return servers.length;
-	}
-	
-	public Server getServer(int index)
-	{
-		return servers[index];
-	}
+
 	
 }

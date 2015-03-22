@@ -40,7 +40,6 @@ public class WaitingCustomerQueue extends CirArrayQueue {
 		
 		//copy from temp queue
 		super.copyQueue(tempQueue);
-
 			
 	}
 }

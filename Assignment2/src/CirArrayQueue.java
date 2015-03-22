@@ -4,7 +4,8 @@ public class CirArrayQueue {
 	private int count; // number of elements in the queue
 	private int queueFront;
 	private int queueRear;
-	private DataElement[] list; // Array of references to the objects that store queue elements
+	private DataElement[] list; // Array of references to the 
+								// objects that store queue elements
 
 	private static final int DEFAULT_SIZE = 100;
 	
@@ -130,7 +131,4 @@ public class CirArrayQueue {
 		
 	}
 	
-	public DataElement[] getList1(){
-		return list;
-	}
 }

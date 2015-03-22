@@ -1,31 +1,31 @@
 public class Server {
 	private Customer currentCustomer;
-	private String status; // value is “free” or “busy”
+	private String status; // value is "free" or "busy"
 	private int transactionTime;
 
-	private final String FREE = "free";
-	private final String BUSY = "busy";
+	private final String STATUS_FREE = "free";
+	private final String STATUS_BUSY = "busy";
 
 	// default constructor
 	public Server() {
 		currentCustomer = null;
-		status = FREE;
+		status = STATUS_FREE;
 		transactionTime = 0;
 	}
 
 	// Method to determine whether a server is free.
 	public boolean isFree() {
-		return status.equals(FREE);
+		return status.equals(STATUS_FREE);
 	}
 
 	// Method to set the status of a server to "busy".
 	public void setBusy() {
-		status = BUSY;
+		status = STATUS_BUSY;
 	}
 
 	// Method to set the status of a server to "free".
 	public void setFree() {
-		status = FREE;
+		status = STATUS_FREE;
 	}
 
 	// Method to set the transaction time according to the parameter t.
