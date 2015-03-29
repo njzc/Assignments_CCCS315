@@ -7,11 +7,10 @@ public class CirArrayQueue {
 	private DataElement[] list; // Array of references to the 
 								// objects that store queue elements
 
-	private static final int DEFAULT_SIZE = 100;
 	
 	// default constructor, creates a queue of default size 100
 	public CirArrayQueue() {
-		this(DEFAULT_SIZE);
+		this(100);
 	}
 
 	// constructor with a parameter
